@@ -1,0 +1,4 @@
+﻿"SP_wallOuterRadius"= 257mm'does this even work
+"SP_length" = 300mm'inner length
+"SP_sidewallWidth" = 51mm
+"SP_boreDiameter"= 13mm
