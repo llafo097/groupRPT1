@@ -1,14 +1,14 @@
 % =========================================================================
 % =========================================================================
-%                             COMPANY NAME     
+%                             RPT1 Group   
 % =========================================================================
 % =========================================================================
 
 % Developed by: Nathaniel Mailhot
-% GROUP: ABC
+% GROUP: RPT1
 % University of Ottawa
 % Mechanical Engineering
-% Latest Revision: 04/11/2020 by Eleni Sabourin
+% Latest Revision: 11/12/2020 by Luca LaFontaine
 
 % =========================================================================
 % SOFTWARE DESCRIPTION
@@ -39,7 +39,7 @@ function varargout = MAIN(varargin)
 
 % Edit the above text to modify the response to help MAIN
 
-% Last Modified by GUIDE v2.5 13-Nov-2020 16:20:06
+% Last Modified by GUIDE v2.5 30-Nov-2020 20:55:41
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -95,9 +95,10 @@ guidata(hObject, handles);
 clc
 %set(handles.Slideraxial_force,'Value',Default_depth);
 %set(handles.TXTaxial_force,'String',num2str(Default_depth));
-set(handles.NumWeights,'Value',1); %The 1st item of the list is selected. Change the list from the GUIDE.
-set(handles.TXT_shaftlength,'String','21.25');
-
+set(handles.NumTraps,'Value',1); %The 1st item of the list is selected. Change the list from the GUIDE.
+set(handles.TXT_trapDiameter,'String','0.25');
+set(handles.TXT_depth,'String','50');
+set(handles.TXT_trapWeight,'String','1');
 %Set the window title with the group identification:
 set(handles.figure1,'Name','Group RPT1 // CADCAM 2020');
 
@@ -125,26 +126,46 @@ else
     num_traps_total = cellstr(get(handles.NumTraps,'String'));
     %Actually take the correct number of traps
     num_traps = str2double(num_traps_total{get(handles.NumTraps,'Value')});
+    trap_weight = str2double(get(handles.TXT_trapWeight,'String'));
+    
 
     
     %Perform basic range checking (for those that can go out of range)
-    if isnan(shaft_length) || (shaft_length <=0) || (shaft_length > 50)
-        msgbox('The shaft length specified is not an acceptable value. Please correct it.','Cannot generate!','warn');
+    if isnan(depth) || (depth < 50) || (depth > 600)
+        msgbox('The depth specified is not an acceptable value. Enter a value between 50m and 600m.','Cannot generate!','warn');
+        return;
+    end
+    if isnan(trap_diameter) || (trap_diameter < 0.25) || (trap_diameter > 1.5)
+        msgbox('The trap diamter is not an acceptable value. Enter a value between 0.25m and 1.5m.','Cannot generate!','warn');
+        return;
+    end 
+    if isnan(trap_weight) || (trap_weight < 1) || (trap_weight > 100)
+        msgbox('The trap weight is not an acceptable value. Enter a value between 1 Kg and 100 Kg.','Cannot generate!','warn');
         return;
     end
     
-
+    SP_code();
+    RL_code();
+    LF_code();
+    LT_code();
     %Show the results on the GUI.
-    log_file = 'Y:\groupRPT1\Log\groupRPT1_LOG.TXT';
-    fid = fopen(log_file,'r'); %Open the log file for reading
-    S=char(fread(fid)'); %Read the file into a string
-    fclose(fid);
-
-    Design_code(depth, num_traps, trap_diameter);
+    %TAKE OUT there're 2 log files here, the first is the actual and the
+    %second is for dev. alternate between as needed
+    %log_file = 'Y:\groupRPT1\Log\groupRPT1_LOG.TXT';
+    %======================================================================
+    %This all has to be put back at the end
     
-    set(handles.TXT_log,'String',S); %write the string into the textbox
-    set(handles.TXT_path,'String',log_file); %show the path of the log file
-    set(handles.TXT_path,'Visible','on');
+    %log_file = 'C:\Users\luca_\OneDrive\Documents\Capstone\groupRPT1\Log\groupRPT1_LOG.TXT';
+    %fid = fopen(log_file,'r'); %Open the log file for reading
+    %S=char(fread(fid)'); %Read the file into a string
+    %fclose(fid);
+
+    
+    
+    %set(handles.TXT_log,'String',S); %write the string into the textbox
+    %set(handles.TXT_path,'String',log_file); %show the path of the log file
+    %set(handles.TXT_path,'Visible','on');
+    %======================================================================
 end
 
 % =========================================================================
@@ -262,19 +283,19 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-% --- Executes on selection change in NumWeights.
-function NumWeights_Callback(hObject, eventdata, handles) %#ok
-% hObject    handle to NumWeights (see GCBO)
+% --- Executes on selection change in NumTraps.
+function NumTraps_Callback(hObject, eventdata, handles) %#ok
+% hObject    handle to NumTraps (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: contents = cellstr(get(hObject,'String')) returns NumWeights contents as cell array
-%        contents{get(hObject,'Value')} returns selected item from NumWeights
+% Hints: contents = cellstr(get(hObject,'String')) returns NumTraps contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from NumTraps
 
 
 % --- Executes during object creation, after setting all properties.
-function NumWeights_CreateFcn(hObject, eventdata, handles) %#ok
-% hObject    handle to NumWeights (see GCBO)
+function NumTraps_CreateFcn(hObject, eventdata, handles) %#ok
+% hObject    handle to NumTraps (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 
@@ -285,18 +306,64 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 
-function TXT_shaftlength_Callback(hObject, eventdata, handles) %#ok
-% hObject    handle to TXT_shaftlength (see GCBO)
+function TXT_trapDiameter_Callback(hObject, eventdata, handles) %#ok
+% hObject    handle to TXT_trapDiameter (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-% Hints: get(hObject,'String') returns contents of TXT_shaftlength as text
-%        str2double(get(hObject,'String')) returns contents of TXT_shaftlength as a double
+% Hints: get(hObject,'String') returns contents of TXT_trapDiameter as text
+%        str2double(get(hObject,'String')) returns contents of TXT_trapDiameter as a double
 
 
 % --- Executes during object creation, after setting all properties.
-function TXT_shaftlength_CreateFcn(hObject, eventdata, handles) %#ok
-% hObject    handle to TXT_shaftlength (see GCBO)
+function TXT_trapDiameter_CreateFcn(hObject, eventdata, handles) %#ok
+% hObject    handle to TXT_trapDiameter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function TXT_depth_Callback(hObject, eventdata, handles)
+% hObject    handle to TXT_depth (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of TXT_depth as text
+%        str2double(get(hObject,'String')) returns contents of TXT_depth as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function TXT_depth_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to TXT_depth (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function TXT_trapWeight_Callback(hObject, eventdata, handles)
+% hObject    handle to TXT_trapWeight (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of TXT_trapWeight as text
+%        str2double(get(hObject,'String')) returns contents of TXT_trapWeight as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function TXT_trapWeight_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to TXT_trapWeight (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
 

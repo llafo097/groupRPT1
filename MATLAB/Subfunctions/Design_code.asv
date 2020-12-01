@@ -11,8 +11,8 @@ function Design_code(vars, would, go, here)
 
     %Declaring text files to be modified
     %Files
-    log_file = 'H:\\groupRPT1\\Log\\groupRPT1_LOG.TXT';
-    %shaft_file = 'H:\\groupABC\\SolidWorks\\Equations\\shaft.txt';
+    log_file = 'H:\\groupABC\\Log\\group_LOG.TXT';
+    shaft_file = 'H:\\groupABC\\SolidWorks\\Equations\\shaft.txt';
         
 	%Write the log file (NOT USED BY SOLIDWORKS, BUT USEFUL TO DEBUG PROGRAM AND REPORT RESULTS IN A CLEAR FORMAT)
 	%Please only create one log file for the complete project but try to keep the file easy to read by adding blank lines and sections...
