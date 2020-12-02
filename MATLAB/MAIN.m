@@ -120,16 +120,17 @@ else
     %Get the design parameters from the interface (DO NOT PERFORM ANY DESIGN CALCULATIONS HERE)
 
     %return depth, trap diameter
-    depth = str2double(get(handles.TXT_depth,'String'));
+    
     trap_diameter = str2double(get(handles.TXT_trapDiameter,'String'));
     %return the entire drop down in an array of strings
     num_traps_total = cellstr(get(handles.NumTraps,'String'));
     %Actually take the correct number of traps
-    num_traps = str2double(num_traps_total{get(handles.NumTraps,'Value')});
+    num_traps = str2double(num_traps_total(get(handles.NumTraps,'Value')));
     trap_weight = str2double(get(handles.TXT_trapWeight,'String'));
     
+    depth = str2double(get(handles.TXT_depth,'String'));
+    fprintf('depth String: %s \nDepth Var: %d', get(handles.TXT_depth,'String'), depth);
 
-    
     %Perform basic range checking (for those that can go out of range)
     if isnan(depth) || (depth < 50) || (depth > 600)
         msgbox('The depth specified is not an acceptable value. Enter a value between 50m and 600m.','Cannot generate!','warn');
@@ -144,7 +145,7 @@ else
         return;
     end
     
-    SP_code();
+    SP_code(depth);
     RL_code();
     LF_code();
     LT_code();

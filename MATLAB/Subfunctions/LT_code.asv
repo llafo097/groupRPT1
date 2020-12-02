@@ -1,6 +1,0 @@
-function SP_code()
-
-%Make functions for your calculations below and bring it all together in this main function
-disp('SP_code checking in')
-
-end
