@@ -146,8 +146,12 @@ else
     end
     
     SP_code(depth);
+    
     RL_code();
-    LF_code();
+    
+    
+    random = 'as you can see i can put whatever I want here but it will still be referenced by spoolDiameter';
+    LF_code(random);
     LT_code();
     %Show the results on the GUI.
     %TAKE OUT there're 2 log files here, the first is the actual and the

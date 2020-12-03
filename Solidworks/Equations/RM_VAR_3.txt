@@ -1,0 +1,10 @@
+﻿"RM_HOOK_THICK"= 1mm'Hook Thickness
+"RM_Z_COMP_THICK"= 1mm'Z-Component Thickness
+"RM_PIN_4_DIAM"= 1mm'Diameter of Pin 4
+"RM_PIN_3_DIAM"= 3.175mm'Diameter of Pin 3 (Purchased Cotter Pin)
+"RM_U_HOLD_THICK"= 1mm'U-Holder Thickness"RM_HINGE_T"= 1mm
+"RM_HINGE_T"= 1mm'Hinge Leaf Thickness
+"RM_HINGE_PIN_DIAM"= 1mm'Hinge Pin Diameter
+"RM_HINGE_SCR_DIAM"= 1mm'Screw Diameter for Hinge Mounting
+"RM_Z_COMP_WIDTH"= 26.9875 - ( 2 * ( "RM_U_HOLD_THICK" ) )'Width of Z-Component
+"RM_HINGE_WIDTH"= "RM_Z_COMP_WIDTH" - ( 2 * ( "RM_Z_COMP_THICK" ) ) - 1'Width of Hinge

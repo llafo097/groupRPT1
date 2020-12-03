@@ -12,12 +12,12 @@ function Design_code(vars, would, go, here)
     %Declaring text files to be modified
     %Files
     log_file = 'H:\\groupRPT1\\Log\\groupRPT1_LOG.TXT';
-    %shaft_file = 'H:\\groupABC\\SolidWorks\\Equations\\shaft.txt';
+    shaft_file = 'H:\\groupABC\\SolidWorks\\Equations\\shaft.txt';
         
 	%Write the log file (NOT USED BY SOLIDWORKS, BUT USEFUL TO DEBUG PROGRAM AND REPORT RESULTS IN A CLEAR FORMAT)
 	%Please only create one log file for the complete project but try to keep the file easy to read by adding blank lines and sections...
     fid = fopen(log_file,'w+t');
-	fprintf(fid,'***Shaft Design***\n');
+	fprintf('***Shaft Design***\n');
     fprintf(fid,strcat('Axial force =',32,num2str(axial_force),' (kN).\n'));
 	fprintf(fid,strcat('Shaft length =',32,num2str(shaft_length),' (mm).\n'));
 	fprintf(fid,strcat('There will be',32,num2str(number_of_weights),' weights on the end of the shaft.\n'));
