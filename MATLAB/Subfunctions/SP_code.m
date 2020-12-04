@@ -1,4 +1,4 @@
-function [usableLength, totalDryWeight] = SP_code(depth, trapDiameter, trapWeight, numTraps)
+function [usableLength, totalDryWeight, buoyForce] = SP_code(depth, trapDiameter, trapWeight, numTraps)
 
     % Need to find these values:
         % Max spool outer wall diamater
@@ -20,7 +20,8 @@ function [usableLength, totalDryWeight] = SP_code(depth, trapDiameter, trapWeigh
     bushingLoad = SP_bushing_system_load(numTraps, trapWeight, frictionForce);
     shaftDiameter = SP_shaft_diameter(SF, D1, bushingLoad, usableLength);
     [boreDiameter, boreThickness] = SP_bore_diameter(SF, shaftDiameter, bushingLoad, usableLength);
-    totalDryWeight = SP_totalDryWeight(ropeWeight, boreDiameter, boreThickness, usableLength)
+    totalDryWeight = SP_totalDryWeight(ropeWeight, boreDiameter, boreThickness, usableLength);
+    buoyForce = SP_buoy_force(usableLength, totalDryWeight);
     
     %Declaring log file to be modified
     log_file = 'C:\Users\luca_\OneDrive\Documents\Capstone\groupRPT1\Log\groupRPT1_LOG.TXT';
@@ -38,6 +39,7 @@ function [usableLength, totalDryWeight] = SP_code(depth, trapDiameter, trapWeigh
     fprintf(fid,strcat('Bore Diameter = ',32,num2str(boreDiameter),' (m).\n'));
     fprintf(fid,strcat('Bore Thickness = ',32,num2str(boreThickness),' (m).\n'));
     fprintf(fid,strcat('Total Dry Weight = ',32,num2str(totalDryWeight),' (Kg).\n'));
+    fprintf(fid,strcat('Buoy Force = ',32,num2str(buoyForce),' (N).\n'));
     fclose(fid);
 
 
@@ -199,4 +201,24 @@ function totalDryWeight = SP_totalDryWeight(ropeWeight, boreDiameter, boreThickn
     spoolVolume = pi*((boreDiameter/2)^2-((boreDiameter - boreThickness/2)/2)^2)*usableLength + pi*((usableLength*0.6/2)^2-((usableLength*0.6 - boreThickness/2)/2)^2)*usableLength + pi*(((usableLength*0.6-boreThickness/2)/2)^2-(boreDiameter/2)^2)*boreThickness + 2*pi*(usableLength/2)^2;
     
     totalDryWeight = densityHDPE*spoolVolume+ropeWeight;
+end
+
+function buoyForce = SP_buoy_force(D, W)
+    %The buoys should be able to turn the spool a full revolution every
+    %2.5s on release. This number will speed up as rope is released. Alpha
+    %is measuered in rad/s
+    alpha = 2*pi*1/2.5;
+    
+    %8.3N is the highest friction force seen acting on the buoys
+    Ff = 8.3; % in N
+    %Gravity and water density
+    g = 9.81;
+    p = 1030.49; %Kg/m^3 
+    %buoyDiameter = 2*((3*D^4*alpha+D/2*Ff)/(8*32*D/2*p*g))^(1/3)
+   %Round 2:
+    
+    buoyDiameter = 2*((3*alpha*W*D/2)/(16*pi*p*g))^(1/3)
+    buoyForce = 8/3*pi*(buoyDiameter/2)^3*p*g;
+   
+    
 end

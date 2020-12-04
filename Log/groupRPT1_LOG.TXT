@@ -1,11 +1,12 @@
 ***Spool Sybsystem Design***
-Rope Volume = 0.017537 (m^3).
-Rope Weight = 0.017537 (Kg).
-Usable Length of Spool = 0.32676 (m).
-Friction Force from Drag = 299.07 (N). 
+Rope Volume = 0.021044 (m^3).
+Rope Weight = 0.021044 (Kg).
+Usable Length of Spool = 0.34723 (m).
+Friction Force from Drag = 141.1698 (N). 
  
-Bushing Load = 1770.57 (N).
+Bushing Load = 1612.6698 (N).
 Shaft Diameter = 0.054 (m).
-Bore Diameter = 0.0915 (m).
-Bore Thickness = 0.02745 (m).
-Total Dry Weight = 182.5768 (Kg).
+Bore Diameter = 0.0895 (m).
+Bore Thickness = 0.02685 (m).
+Total Dry Weight = 207.3449 (Kg).
+Buoy Force = 45.2372 (N).

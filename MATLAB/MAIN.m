@@ -143,7 +143,7 @@ else
         return;
     end
     
-    [spoolLength, SpoolRopeWeight] = SP_code(depth, trap_diameter, trap_weight, num_traps);
+    [spoolLength, SpoolRopeWeight, buoyForce] = SP_code(depth, trap_diameter, trap_weight, num_traps);
     
     %RL_code();
     %LF_code(random);
