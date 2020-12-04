@@ -127,10 +127,8 @@ else
     %Actually take the correct number of traps
     num_traps = str2double(num_traps_total(get(handles.NumTraps,'Value')));
     trap_weight = str2double(get(handles.TXT_trapWeight,'String'));
-    
     depth = str2double(get(handles.TXT_depth,'String'));
-    fprintf('depth String: %s \nDepth Var: %d', get(handles.TXT_depth,'String'), depth);
-
+    
     %Perform basic range checking (for those that can go out of range)
     if isnan(depth) || (depth < 50) || (depth > 600)
         msgbox('The depth specified is not an acceptable value. Enter a value between 50m and 600m.','Cannot generate!','warn');
@@ -145,14 +143,12 @@ else
         return;
     end
     
-    SP_code(depth);
+    [spoolLength, SpoolRopeWeight] = SP_code(depth, trap_diameter, trap_weight, num_traps);
     
-    RL_code();
+    %RL_code();
+    %LF_code(random);
+    %LT_code();
     
-    
-    random = 'as you can see i can put whatever I want here but it will still be referenced by spoolDiameter';
-    LF_code(random);
-    LT_code();
     %Show the results on the GUI.
     %TAKE OUT there're 2 log files here, the first is the actual and the
     %second is for dev. alternate between as needed
@@ -160,16 +156,16 @@ else
     %======================================================================
     %This all has to be put back at the end
     
-    %log_file = 'C:\Users\luca_\OneDrive\Documents\Capstone\groupRPT1\Log\groupRPT1_LOG.TXT';
-    %fid = fopen(log_file,'r'); %Open the log file for reading
-    %S=char(fread(fid)'); %Read the file into a string
-    %fclose(fid);
+    log_file = 'C:\Users\luca_\OneDrive\Documents\Capstone\groupRPT1\Log\groupRPT1_LOG.TXT';
+    fid = fopen(log_file,'r'); %Open the log file for reading
+    S=char(fread(fid)'); %Read the file into a string
+    fclose(fid);
 
     
     
-    %set(handles.TXT_log,'String',S); %write the string into the textbox
-    %set(handles.TXT_path,'String',log_file); %show the path of the log file
-    %set(handles.TXT_path,'Visible','on');
+    set(handles.TXT_log,'String',S); %write the string into the textbox
+    set(handles.TXT_path,'String',log_file); %show the path of the log file
+    set(handles.TXT_path,'Visible','on');
     %======================================================================
 end
 

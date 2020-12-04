@@ -1,4 +1,4 @@
-function [usableLength, totalDryWeight] = SP_code(depth, trapDiameter, trapWeight, numTraps)
+function SP_code(depth, trapDiameter, trapWeight, numTraps)
 
     % Need to find these values:
         % Max spool outer wall diamater
@@ -37,7 +37,7 @@ function [usableLength, totalDryWeight] = SP_code(depth, trapDiameter, trapWeigh
     fprintf(fid,strcat('Shaft Diameter = ',32,num2str(shaftDiameter),' (m).\n'));
     fprintf(fid,strcat('Bore Diameter = ',32,num2str(boreDiameter),' (m).\n'));
     fprintf(fid,strcat('Bore Thickness = ',32,num2str(boreThickness),' (m).\n'));
-    fprintf(fid,strcat('Total Dry Weight = ',32,num2str(totalDryWeight),' (Kg).\n'));
+    fprintf(fid,strcat('totalDryWeight = ',32,num2str(boreThickness),' (m).\n'));
     fclose(fid);
 
 
